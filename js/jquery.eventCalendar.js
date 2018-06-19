@@ -583,7 +583,7 @@ if (typeof DEBUG === 'undefined') {
             var dayToCheck = (day !== '') ? parseInt(day, 10) : -1;
 
             var subtitle = $element.find('.eventsCalendar-list-wrap .eventsCalendar-subtitle');
-            if (!period) period = 15;
+            if (!period) period = $EventCalendar.currentPeriod;
 
             if (!direction) {
                 // first load
@@ -742,8 +742,11 @@ if (typeof DEBUG === 'undefined') {
                         }
                     }
 
+                    var $timeSlot = $('<li class="booking-link js-booking-link ' + (isIntersectPeriod ? 'closed' : '') + '">' + _timeFmt(datePeriod.getHours()) + ':' + _timeFmt(datePeriod.getMinutes()) + '</li>');
+                    $timeSlot.data('date', new Date(datePeriod.valueOf()));
+
                     $element.find('.eventsCalendar-list')
-                        .append('<li class="booking-link js-booking-link ' + (isIntersectPeriod ? 'closed' : '') + '">' + _timeFmt(datePeriod.getHours()) + ':' + _timeFmt(datePeriod.getMinutes()) + '</li>');
+                        .append($timeSlot);
                 }
             } else {
                 $element.find('.eventsCalendar-list').html(events.join(''));
@@ -1071,7 +1074,13 @@ if (typeof DEBUG === 'undefined') {
             $element.find('.js-registration-window').remove();
             var $regWin = $element.append('<div class="registration-window js-registration-window"></div>').find('.js-registration-window');
             $.get('form.html', function(data) {
-                $regWin.append(data).find('.js-form-title').text('');
+                var date = new Date($EventCalendar.currentBookingWindow.valueOf());
+
+                var strDateFrom = date.toString('MMMM dS HH:mm');
+                date.addMinutes($EventCalendar.currentPeriod);
+
+                var strDateTo = date.toString('MMMM dS HH:mm');
+                $regWin.append(data).find('.js-form-title').text('Book time slot from ' + strDateFrom + ' to '+ strDateTo);
             })
         };
 
