@@ -9,67 +9,67 @@
     display: none;
 }
 
-.eventCalendar-wrap {
+.bookingCalendar-wrap {
     position: relative;
     overflow: hidden;
 }
 
-.eventCalendar-wrap .arrow {
+.bookingCalendar-wrap .arrow {
     position: absolute;
     z-index: 5;
     top: 3px;
 }
 
-.eventCalendar-wrap .prev {
+.bookingCalendar-wrap .prev {
     left: 3px;
 }
 
-.eventCalendar-wrap .next {
+.bookingCalendar-wrap .next {
     right: 3px;
 }
 
-.eventsCalendar-currentTitle .monthTitle {
+.bookingCalendar-currentTitle .monthTitle {
     display: block;
     text-align: center;
 }
 
-.eventsCalendar-monthWrap {
+.bookingCalendar-monthWrap {
     z-index: 2;
 }
 
-.eventsCalendar-monthWrap.currentMonth {
+.bookingCalendar-monthWrap.currentMonth {
     z-index: 1;
 }
 
-.eventsCalendar-daysList {
+.bookingCalendar-daysList {
     display: table;
     width: 100%;
 }
 
-.eventsCalendar-daysList.showAsWeek {
+.bookingCalendar-daysList.showAsWeek {
     display: block;
 }
 
-.eventsCalendar-daysList li {
+.bookingCalendar-daysList li {
     display: table-cell;
 }
 
-.eventsCalendar-daysList li.dayWithEvents {
+.bookingCalendar-daysList li.dayWithEvents {
     background: rgba(0, 0, 0, 0.15);
 }
 
-.eventsCalendar-daysList li.current {
+.bookingCalendar-daysList li.current {
     background: rgba(0, 0, 0, 0.35);
 }
 
-.eventsCalendar-daysList.showAsWeek li {
+.bookingCalendar-daysList.showAsWeek li {
     display: block;
     float: left;
     width: 14.28%;
     height: 20px;
 }
 
-.eventsCalendar-daysList li a {
+.bookingCalendar-daysList li a {
     padding: 0;
     display: block;
     text-align: center;
@@ -77,24 +77,24 @@
     min-width: 7px;
 }
 
-.eventsCalendar-loading {
+.bookingCalendar-loading {
     display: block;
     min-width: 100px;
     height: 40px;
     line-height: 40px;
 }
 
-.eventsCalendar-list {
+.bookingCalendar-list {
     position: relative;
     z-index: 1;
 
 }
 
-.eventsCalendar-list.oldEventList {
+.bookingCalendar-list.oldEventList {
     z-index: 2;
 }
 
-.eventsCalendar-subtitle {
+.bookingCalendar-subtitle {
     padding-left: 5px;
     font-weight: bold;
     font-size: 120%;

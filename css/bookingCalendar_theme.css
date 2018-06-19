@@ -9,7 +9,7 @@
 	color: #555;
 	background-color:#fff;
  }
-.eventCalendar-wrap {
+.bookingCalendar-wrap {
 	border:solid 1px #d3d3d3;
 	box-shadow:0 0 15px #999;
 	border-radius:5px;
@@ -17,7 +17,7 @@
 	background-color:#fff;
 	color:#807E7E;
 }
-	.eventCalendar-wrap .arrow {
+	.bookingCalendar-wrap .arrow {
 		text-decoration:none;
 		color:#fff;
 		padding:0 5px;
@@ -25,11 +25,11 @@
 		top:9px;
 		padding:8px 10px;
 	}
-		.eventCalendar-wrap .arrow.prev {
+		.bookingCalendar-wrap .arrow.prev {
 
 		}
-		.eventCalendar-wrap .arrow:hover { opacity:0.7;}
-		.eventCalendar-wrap .arrow span {
+		.bookingCalendar-wrap .arrow:hover { opacity:0.7;}
+		.bookingCalendar-wrap .arrow span {
 			height: 0;
 			width: 0;
 			font-size: 0;
@@ -40,38 +40,38 @@
 			float:left;
 			text-indent:-5000px;
 		}
-			.eventCalendar-wrap .arrow.prev span {
+			.bookingCalendar-wrap .arrow.prev span {
 				border-left-width:0;
 				border-right: 6px solid #fff;
 			}
-	.eventsCalendar-slider { height:80px;}
+	.bookingCalendar-slider { height:80px;}
 
-	.eventsCalendar-monthWrap {
+	.bookingCalendar-monthWrap {
 		border-radius:5px;
 		top:10px;
 		left:0px;
 	}
-		.eventsCalendar-currentTitle {
+		.bookingCalendar-currentTitle {
 			line-height:25px;
 			background-color:#138DA5;
 			outline:1px solid #138DA5;
 			border:1px solid #E3E3E3;
 			border-width:1px 0;
 		}
-			.eventsCalendar-currentTitle .monthTitle {
+			.bookingCalendar-currentTitle .monthTitle {
 				font-size:110%;
 				text-decoration:none;
 				font-weight:bold;
 				color:#fff;
 			}
 
-		.eventsCalendar-daysList {
+		.bookingCalendar-daysList {
 			zoom: 1;
 			padding:0;
 			width:100%;
 
 		}
-			.eventsCalendar-daysList.showAsWeek {
+			.bookingCalendar-daysList.showAsWeek {
 				margin:10px 5px;
 				width:auto;
 
@@ -94,84 +94,84 @@
 				);
 
 			}
-			.eventsCalendar-daysList.showDayNames.showAsWeek {
+			.bookingCalendar-daysList.showDayNames.showAsWeek {
 
 				border-radius:5px 5px 0 0;
 			}
-			.eventsCalendar-daysList:before, .eventsCalendar-daysList:after { content:""; display:table; }
-			.eventsCalendar-daysList:after { clear: both; }
-			.eventsCalendar-day-header {
+			.bookingCalendar-daysList:before, .bookingCalendar-daysList:after { content:""; display:table; }
+			.bookingCalendar-daysList:after { clear: both; }
+			.bookingCalendar-day-header {
 				text-transform:lowercase;
 				text-align:center;
 				font-size:10px;
 				border-bottom:solid 1px #BCBCBC;
 			}
-			.eventsCalendar-daysList.showAsWeek li {
+			.bookingCalendar-daysList.showAsWeek li {
 				height:auto;
 			}
-				.eventsCalendar-daysList.showAsWeek li.empty {
+				.bookingCalendar-daysList.showAsWeek li.empty {
 					background-color: #ccc;
 					min-height:29px;
 				}
-			.eventsCalendar-day a {
+			.bookingCalendar-day a {
 				text-decoration:none;
 				font-size:10px;
 				color:#424242;
 			}
-			.eventsCalendar-day {
+			.bookingCalendar-day {
 				border-left:solid 1px #BCBCBC;
 			}
-			.eventsCalendar-day a  {
+			.bookingCalendar-day a  {
 				border:solid 1px #BCBCBC;
 				border-width:0 1px 1px 0;
 			}
-			.showAsWeek .eventsCalendar-day { border-left-width:0;}
-			.showAsWeek .eventsCalendar-day a  {
+			.showAsWeek .bookingCalendar-day { border-left-width:0;}
+			.showAsWeek .bookingCalendar-day a  {
 				border:solid 1px red;
 				border-color:#fff #BCBCBC #BCBCBC #eee;
 				line-height:27px;
 				font-size:11px;
 
 			}
-				.eventsCalendar-day a:hover {
+				.bookingCalendar-day a:hover {
 					background-color:#E4E4E4;
 					box-shadow:inset 5px 5px 10px #C1C1C1;
 					text-shadow: 2px 2px 2px #C1C1C1;
 				}
-			.eventsCalendar-daysList li.dayWithEvents a {
+			.bookingCalendar-daysList li.dayWithEvents a {
 				background:#89B814;
 				box-shadow:inset 5px 5px 10px #698B10;
 				text-shadow: 2px 2px 2px #698B10;
 				color:#fff;
 			}
-				li.eventsCalendar-day.dayWithEvents a:hover {
+				li.bookingCalendar-day.dayWithEvents a:hover {
 					background-color:#C2D374;
 					box-shadow:inset 5px 5px 10px #89B814;
 					text-shadow: 2px 2px 2px #89B814;
 				}
-			.eventsCalendar-daysList li.today a {
+			.bookingCalendar-daysList li.today a {
 				color:#fff;
 				background:#449FB2;
 				box-shadow:inset 5px 5px 10px #216B7A;
 				text-shadow: 2px 2px 2px #216B7A;
 			}
-				li.eventsCalendar-day.today a:hover {
+				li.bookingCalendar-day.today a:hover {
 					background-color:#79BDCC;
 					box-shadow:inset 5px 5px 10px #449FB2;
 					text-shadow: 2px 2px 2px #449FB2;
 				}
-			.eventsCalendar-daysList li.current a {
+			.bookingCalendar-daysList li.current a {
 				color:#fff;
 				background:#449FB2;
 				box-shadow:inset 5px 5px 10px #216B7A;
 				text-shadow: 2px 2px 2px #216B7A;
 			}
-				li.eventsCalendar-day.current a:hover {
+				li.bookingCalendar-day.current a:hover {
 					background-color:#79BDCC;
 					box-shadow:inset 5px 5px 10px #449FB2;
 					text-shadow: 2px 2px 2px #449FB2;
 				}
-		.eventsCalendar-loading {
+		.bookingCalendar-loading {
 			border-radius:4px;
 			margin:5px auto;
 			padding:0 10px;
@@ -186,36 +186,36 @@
 			top:25px;
 			left:5px;
 		}
-			.eventsCalendar-loading.error {
+			.bookingCalendar-loading.error {
 				background-color:red;
 			}
-.eventsCalendar-list-wrap {
+.bookingCalendar-list-wrap {
 	min-height:100px;
 	position:relative;
 }
-	.eventsCalendar-list-content.scrollable {
+	.bookingCalendar-list-content.scrollable {
 
 		height:100px;
 		overflow-y:auto;
 		margin:0 5px 5px 0;
 	}
-	.eventsCalendar-list {
+	.bookingCalendar-list {
 		margin:0; padding:0; list-style-type:none;
 	}
-	.eventsCalendar-list li {
+	.bookingCalendar-list li {
 		padding:0 5px 15px;
 		margin:0;
 		clear:both;
 	}
-		.eventsCalendar-list li time {
+		.bookingCalendar-list li time {
 			font-size:10px;
 			line-height:13px;
 		}
-		.eventsCalendar-list li time em {
+		.bookingCalendar-list li time em {
 			float:left;
 			font-style:normal;
 		}
-		.eventsCalendar-list li time small {
+		.bookingCalendar-list li time small {
 			font-size:10px;
 			float:left;
 			background-color:#807E7E;
@@ -223,22 +223,22 @@
 			padding:0 5px 0 4px;
 			margin:0 0 0 3px;
 		}
-		.eventsCalendar-list li .eventTitle {
+		.bookingCalendar-list li .eventTitle {
 			display:block;
 			clear:both;
 			color:#0E8EAB;
 			font-weight:bold;
 			text-decoration:none;
 		}
-			.eventsCalendar-list li .eventTitle:hover { text-decoration:underline;}
-		.eventsCalendar-list li .eventDescription {
+			.bookingCalendar-list li .eventTitle:hover { text-decoration:underline;}
+		.bookingCalendar-list li .eventDescription {
 			clear: both;
 			margin:0 0 5px 0;
 			font-size:80%;
 			line-height:1.2em;
 
 		}
-		.eventsCalendar-list .eventsCalendar-noEvents {
+		.bookingCalendar-list .bookingCalendar-noEvents {
 			font-size:120%;
 			border-radius:4px;
 			margin:5px;
@@ -307,7 +307,7 @@ body {
 }
 a { color: #0E8EAB}
 /*
-.eventCalendar-wrap {
+.bookingCalendar-wrap {
 	width:265px;
 }
 */
@@ -318,11 +318,11 @@ a { color: #0E8EAB}
 .fl { float:left;}
 .cb { clear:both;}
 
-.thin .eventCalendar-wrap { width:195px;}
+.thin .bookingCalendar-wrap { width:195px;}
 	.thin pre { width:185px;}
 	.thin .demoDesc { width:195px;}
 
-.wide  .eventCalendar-wrap { width:650px; }
+.wide  .bookingCalendar-wrap { width:650px; }
 	.wide pre { width:640px;}
 	.wide .demoDesc { width:650px;}
 

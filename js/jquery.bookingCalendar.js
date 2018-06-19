@@ -549,8 +549,8 @@ if (typeof DEBUG === 'undefined') {
         var eventsJson = {};
 
         var showError = function (msg) {
-            $element.find('.eventsCalendar-list-wrap')
-                .html("<span class='eventsCalendar-loading error'>" +
+            $element.find('.bookingCalendar-list-wrap')
+                .html("<span class='bookingCalendar-loading error'>" +
                     msg +
                     " " +
                     $EventCalendar.settings.eventsJson +
@@ -563,8 +563,8 @@ if (typeof DEBUG === 'undefined') {
          */
         var _setCalendarWidth = function () {
             slideDistance = $element.width();
-            $element.find('.eventsCalendar-monthWrap').width($element.width() + 'px');
-            $element.find('.eventsCalendar-list-wrap').width($element.width() + 'px');
+            $element.find('.bookingCalendar-monthWrap').width($element.width() + 'px');
+            $element.find('.bookingCalendar-list-wrap').width($element.width() + 'px');
         };
 
         var _initialiseCalendarWidth = function () {
@@ -582,7 +582,7 @@ if (typeof DEBUG === 'undefined') {
             var monthToCheck = (month !== '') ? parseInt(month, 10) : -1;
             var dayToCheck = (day !== '') ? parseInt(day, 10) : -1;
 
-            var subtitle = $element.find('.eventsCalendar-list-wrap .eventsCalendar-subtitle');
+            var subtitle = $element.find('.bookingCalendar-list-wrap .bookingCalendar-subtitle');
             if (!period) period = $EventCalendar.currentPeriod;
 
             if (!direction) {
@@ -603,14 +603,14 @@ if (typeof DEBUG === 'undefined') {
                 }
             }
 
-            $element.find('.eventsCalendar-list')
+            $element.find('.bookingCalendar-list')
                 .css({
                     opacity: $EventCalendar.settings.moveOpacity,
                     left: directionLeftMove,
                     height: eventContentHeight
                 });
 
-            $element.find('.eventsCalendar-list').css({'left': 0, 'height': 'auto'}).hide();
+            $element.find('.bookingCalendar-list').css({'left': 0, 'height': 'auto'}).hide();
             $element.find('.dayWithEvents').removeClass('dayWithEvents');
 
             var events = [];
@@ -648,7 +648,7 @@ if (typeof DEBUG === 'undefined') {
                     $EventCalendar.addEventToCalendar(
                         eventItem,
                         function (eventInstance, dayOfMonth) {
-                            var dayElement = $element.find('.currentMonth .eventsCalendar-daysList #dayList_' + dayOfMonth);
+                            var dayElement = $element.find('.currentMonth .bookingCalendar-daysList #dayList_' + dayOfMonth);
 
                             if (!dayElement.hasClass('dayWithEvents')) {
                                 dayElement.addClass('dayWithEvents');
@@ -700,7 +700,7 @@ if (typeof DEBUG === 'undefined') {
 
             // Add message if there are no events for this period
             if (!events.length) {
-                events.push('<li class="eventsCalendar-noEvents"><p>' + $EventCalendar.settings.textNoEvents + '</p></li>');
+                events.push('<li class="bookingCalendar-noEvents"><p>' + $EventCalendar.settings.textNoEvents + '</p></li>');
             }
 
             var onAfterInitialiseList = $EventCalendar.settings.onAfterInitialiseList;
@@ -708,8 +708,8 @@ if (typeof DEBUG === 'undefined') {
                 onAfterInitialiseList();
             }
 
-            $element.find('.eventsCalendar-loading').finish().hide();
-            $element.find('.eventsCalendar-list').empty();
+            $element.find('.bookingCalendar-loading').finish().hide();
+            $element.find('.bookingCalendar-list').empty();
             if (displayDate) {
                 var dayRoutineI;
                 var datePeriod = new Date(displayDate.valueOf());
@@ -745,18 +745,18 @@ if (typeof DEBUG === 'undefined') {
                     var $timeSlot = $('<li class="booking-link js-booking-link ' + (isIntersectPeriod ? 'closed' : '') + '">' + _timeFmt(datePeriod.getHours()) + ':' + _timeFmt(datePeriod.getMinutes()) + '</li>');
                     $timeSlot.data('date', new Date(datePeriod.valueOf()));
 
-                    $element.find('.eventsCalendar-list')
+                    $element.find('.bookingCalendar-list')
                         .append($timeSlot);
                 }
             } else {
-                $element.find('.eventsCalendar-list').html(events.join(''));
+                $element.find('.bookingCalendar-list').html(events.join(''));
             }
 
             if ($EventCalendar.settings.collapsible) {
                 $element.find('.eventDescription').hide();
             }
 
-            $element.find('.eventsCalendar-list').css({
+            $element.find('.bookingCalendar-list').css({
                 opacity: 1,
                 height: "auto",
                 display: 'block'
@@ -771,7 +771,7 @@ if (typeof DEBUG === 'undefined') {
             var specificMonth = (typeof month === "number") ? month : $EventCalendar.settings.currentDate.getMonth();
             var specificDay = (typeof day === "number") ? day : -1;
 
-            $element.find('.eventsCalendar-loading').fadeIn();
+            $element.find('.bookingCalendar-loading').fadeIn();
 
             if ($EventCalendar.settings.jsonData) {
                 // user send a json in the plugin params
@@ -824,22 +824,22 @@ if (typeof DEBUG === 'undefined') {
             $element.attr('data-current-month', month).attr('data-current-year', year);
 
             // Initialise the DOM for the new month
-            var $eventsCalendarSlider = $("<div class='eventsCalendar-slider js-calendar-slider'></div>");
-            var $eventsCalendarMonthWrap = $("<div class='eventsCalendar-monthWrap'></div>");
-            var $eventsCalendarTitle = $("<div class='eventsCalendar-currentTitle'><a href='#' class='monthTitle'></a></div>");
+            var $eventsCalendarSlider = $("<div class='bookingCalendar-slider js-calendar-slider'></div>");
+            var $eventsCalendarMonthWrap = $("<div class='bookingCalendar-monthWrap'></div>");
+            var $eventsCalendarTitle = $("<div class='bookingCalendar-currentTitle'><a href='#' class='monthTitle'></a></div>");
             var $eventsCalendarArrows = $("<a href='#' class='arrow prev'><span>" + $EventCalendar.settings.textPrevious + "</span></a><a href='#' class='arrow next'><span>" + $EventCalendar.settings.textNext + "</span></a>");
-            var $eventsCalendarDaysList = $("<ul class='eventsCalendar-daysList'></ul>");
+            var $eventsCalendarDaysList = $("<ul class='bookingCalendar-daysList'></ul>");
 
-            if (!$element.find('.eventsCalendar-slider').size()) {
+            if (!$element.find('.bookingCalendar-slider').size()) {
                 $element.prepend($eventsCalendarSlider);
                 $eventsCalendarSlider.append($eventsCalendarMonthWrap);
                 $eventsCalendarSlider.append($eventsCalendarArrows);
             } else {
-                $eventsCalendarSlider = $element.find('.eventsCalendar-slider');
+                $eventsCalendarSlider = $element.find('.bookingCalendar-slider');
                 $eventsCalendarSlider.append($eventsCalendarMonthWrap);
             }
 
-            $element.find('.eventsCalendar-monthWrap.currentMonth').removeClass('currentMonth').addClass('oldMonth');
+            $element.find('.bookingCalendar-monthWrap.currentMonth').removeClass('currentMonth').addClass('oldMonth');
             $eventsCalendarMonthWrap.addClass('currentMonth').append($eventsCalendarTitle, $eventsCalendarDaysList);
 
 
@@ -857,7 +857,7 @@ if (typeof DEBUG === 'undefined') {
                     $eventsCalendarDaysList.addClass('showDayNames');
                     var dayOfWeek = Date.today().moveToDayOfWeek($EventCalendar.settings.startWeekOnMonday ? 1 : 0);
                     for (dayCount = 0; dayCount < 7; dayCount += 1) {
-                        calendarCells.push('<li class="eventsCalendar-day-header">' + dayOfWeek.toString($EventCalendar.settings.dayNameFormat) + '</li>');
+                        calendarCells.push('<li class="bookingCalendar-day-header">' + dayOfWeek.toString($EventCalendar.settings.dayNameFormat) + '</li>');
                         dayOfWeek.addDays(1);
                     }
                 }
@@ -872,7 +872,7 @@ if (typeof DEBUG === 'undefined') {
                 }
 
                 for (dayCount = 0; dayCount < emptyCellsToShow; dayCount += 1) {
-                    calendarCells.push('<li class="eventsCalendar-day empty"></li>');
+                    calendarCells.push('<li class="bookingCalendar-day empty"></li>');
                 }
             }
 
@@ -880,7 +880,7 @@ if (typeof DEBUG === 'undefined') {
             var daysInMonth = Date.getDaysInMonth(dateToShow.getFullYear(), dateToShow.getMonth());
             for (dayCount = 1; dayCount <= daysInMonth; dayCount += 1) {
                 calendarCells.push(
-                    '<li id="dayList_' + dayCount + '" rel="' + dayCount + '" class="eventsCalendar-day"><a href="#">' + dayCount + '</a></li>'
+                    '<li id="dayList_' + dayCount + '" rel="' + dayCount + '" class="bookingCalendar-day"><a href="#">' + dayCount + '</a></li>'
                 );
             }
             $eventsCalendarDaysList.append(calendarCells.join(''));
@@ -1025,12 +1025,12 @@ if (typeof DEBUG === 'undefined') {
         $EventCalendar.settings = {};
 
         var _initialiseLoadingMessage = function () {
-            $element.addClass('eventCalendar-wrap')
-                .append("<div class='eventsCalendar-list-wrap js-event-list' ><p class='eventsCalendar-subtitle'></p><div class='eventsCalendar-list-content'><ul class='eventsCalendar-list'></ul></div></div>");
+            $element.addClass('bookingCalendar-wrap')
+                .append("<div class='bookingCalendar-list-wrap js-event-list' ><p class='bookingCalendar-subtitle'></p><div class='bookingCalendar-list-content'><ul class='bookingCalendar-list'></ul></div></div>");
         };
 
         var _initialisePeriodList = function () {
-            var $periodList = $element.append("<div class='eventsCalendar-period-wrapper js-period-list'></div>").find('.js-period-list');
+            var $periodList = $element.append("<div class='bookingCalendar-period-wrapper js-period-list'></div>").find('.js-period-list');
             $.each($EventCalendar.settings.timePeriods, function (key, period) {
                 $periodList.append('<div class="period-selector js-period-selector" data-period="' + period + '">' + period + ' min.</div>');
             });
@@ -1039,7 +1039,7 @@ if (typeof DEBUG === 'undefined') {
 
         var _initialiseContentScrolling = function () {
             if ($EventCalendar.settings.eventsScrollable) {
-                $element.find('.eventsCalendar-list-content').addClass('scrollable');
+                $element.find('.bookingCalendar-list-content').addClass('scrollable');
             }
         };
 
@@ -1055,13 +1055,13 @@ if (typeof DEBUG === 'undefined') {
                     _changeCalendarMonth("prev");
                     lastMonthMove = '+=' + slideDistance;
                 }
-                $element.find('.eventsCalendar-monthWrap.oldMonth').remove();
+                $element.find('.bookingCalendar-monthWrap.oldMonth').remove();
 
-                //$element.find('.eventsCalendar-monthWrap.oldMonth').animate({
+                //$element.find('.bookingCalendar-monthWrap.oldMonth').animate({
                 //    opacity : $EventCalendar.settings.moveOpacity,
                 //    left    : lastMonthMove
                 //}, $EventCalendar.settings.moveSpeed, function() {
-                //    $element.find('.eventsCalendar-monthWrap.oldMonth').remove();
+                //    $element.find('.bookingCalendar-monthWrap.oldMonth').remove();
                 //});
             });
         };
@@ -1104,7 +1104,7 @@ if (typeof DEBUG === 'undefined') {
         };
 
         var _initialise = function () {
-            $EventCalendar.settings = $.extend({}, $.fn.eventCalendar.defaults, options);
+            $EventCalendar.settings = $.extend({}, $.fn.bookingCalendar.defaults, options);
 
             _initialiseLoadingMessage();
             _initialisePeriodList();
@@ -1119,7 +1119,7 @@ if (typeof DEBUG === 'undefined') {
 
             _changeMonth();
 
-            $element.on('click', '.eventsCalendar-day a', function (e) {
+            $element.on('click', '.bookingCalendar-day a', function (e) {
                 e.preventDefault();
                 var year = parseInt($element.attr('data-current-year'), 10);
                 var month = parseInt($element.attr('data-current-month'), 10);
@@ -1150,7 +1150,7 @@ if (typeof DEBUG === 'undefined') {
                 _beginRegister();
             });
 
-            $element.find('.eventsCalendar-list').on('click', '.eventTitle', function (e) {
+            $element.find('.bookingCalendar-list').on('click', '.eventTitle', function (e) {
                 if ($EventCalendar.settings.collapsible && $EventCalendar.settings.showDescription) {
                     e.preventDefault();
 
@@ -1189,7 +1189,7 @@ if (typeof DEBUG === 'undefined') {
      * @param {object=} options  Parameter overrides - see defaults for complete list [Optional]
      * @returns {*}
      */
-    $.fn.eventCalendar = function (options) {
+    $.fn.bookingCalendar = function (options) {
         return this.each(function () {
             var element = $(this);
 
@@ -1211,7 +1211,7 @@ if (typeof DEBUG === 'undefined') {
      * Defines the default values for the function parameters
      * @type {{eventsJson: string, jsonDateFormat: string, jsonData: string, cacheJson: boolean, sortAscending: boolean, eventsLimit: number, dayNameFormat: string, textCalendarTitle: string, textEventHeaderDayView: string, textEventHeaderMonthView: string, textNoEvents: string, textNext: string, textPrevious: string, textNextEvents: string, textGoToEventUrl: string, showDayAsWeeks: boolean, startWeekOnMonday: boolean, showDayNameInCalendar: boolean, showDescription: boolean, collapsible: boolean, onlyOneDescription: boolean, openEventInNewWindow: boolean, eventsScrollable: boolean, initialEventList: boolean|string, currentDate: Date, moveSpeed: number, moveOpacity: number}}
      */
-    $.fn.eventCalendar.defaults = {
+    $.fn.bookingCalendar.defaults = {
         eventsJson: "js/events.json",
         jsonData: "",          // to load and inline json (not ajax calls)
         jsonDateFormat: "timestamp", // either timestamp or a format as specified here: https://code.google.com/p/datejs/wiki/FormatSpecifiers
@@ -1271,6 +1271,6 @@ if (typeof DEBUG === 'undefined') {
     $.EventRecurrence = EventRecurrence;
     $.EventInstance = EventInstance;
     $.EventItem = EventItem;
-    $.EventCalendar = EventCalendar;
+    $.bookingCalendar = EventCalendar;
 
 }(jQuery));
