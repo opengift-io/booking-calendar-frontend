@@ -548,6 +548,19 @@ if (typeof DEBUG === 'undefined') {
         var slideDistance = "300";
         var eventsJson = {};
 
+        $EventCalendar.post = function(data, callback) {
+            if (!$EventCalendar.settings.service) {
+                return false;
+            }
+
+            $.post(
+                $EventCalendar.settings.service,
+                data,
+                callback
+            )
+        };
+
+
         var showError = function (msg) {
             $element.find('.bookingCalendar-list-wrap')
                 .html("<span class='bookingCalendar-loading error'>" +
@@ -571,6 +584,37 @@ if (typeof DEBUG === 'undefined') {
             _setCalendarWidth();
             $(window).resize(function () {
                 _setCalendarWidth();
+            });
+        };
+
+        var _initializeDragNDrop = function() {
+            new dnd('.js-event-list-item');
+            var $overDay = false;
+            $(document).mousemove(function(e) {
+                $('.js-calendar-day').each(function() {
+                    var top = e.clientY + $(window).scrollTop();
+                    if (($(this).offset().left < e.clientX) && (e.clientX < ($(this).offset().left + $(this).width()))) {
+                        if (($(this).offset().top < top) && (top < ($(this).offset().top + $(this).height()))) {
+                            $overDay = $(this);
+                            if (window.$dndMovedElement) {
+                                $overDay.addClass('active').siblings().removeClass('active');
+                            }
+                        }
+                    }
+                });
+            }).mouseup(function() {
+                if (window.$dndMovedElement) {
+                    if ($overDay) {
+                        $EventCalendar.post(
+                            {
+                                'date': $overDay.data('date'),
+                                'event': window.$dndMovedElement.data('id')
+                            }
+                        )
+                    }
+                }
+
+                $overDay = false;
             });
         };
 
@@ -637,6 +681,7 @@ if (typeof DEBUG === 'undefined') {
                 if (e < 10) return '0' + e;
                 return '' + e;
             }
+
             // Add each event to the calendar
             if (data.length) {
 
@@ -659,7 +704,7 @@ if (typeof DEBUG === 'undefined') {
                                 return false;
                             }
 
-                            var eventClass = eventInstance.classEvent ? ' class="' + eventInstance.classEvent + '"' : '';
+                            var eventClass = eventInstance.classEvent ? eventInstance.classEvent : '';
 
                             var titleClass = ' class="eventTitle';
                             titleClass += eventInstance.classTitle ? ' ' + eventInstance.classTitle : '';
@@ -680,7 +725,7 @@ if (typeof DEBUG === 'undefined') {
                                 eventTitle = '<span' + titleClass + '>' + eventInstance.title + '</span>';
                             }
 
-                            events.push('<li id="' + key + '"' + eventClass + '>' + eventTitle + '<div' + descriptionClass + '>' + event.description + '</div></li>');
+                            events.push('<li data-id="' + eventInstance.id + '" id="' + key + '" class="event-list-item js-event-list-item ' + eventClass + '">' + eventTitle + '<div' + descriptionClass + '>' + event.description + '</div></li>');
                             eventsInRoutine.push([eventInstance.startDate, eventInstance.endDate]);
 
                             var onEventAddedToList = $EventCalendar.settings.onEventAddedToList;
@@ -710,7 +755,7 @@ if (typeof DEBUG === 'undefined') {
 
             $element.find('.bookingCalendar-loading').finish().hide();
             $element.find('.bookingCalendar-list').empty();
-            if (displayDate) {
+            if ($EventCalendar.settings.showSlots && displayDate) {
                 var dayRoutineI;
                 var datePeriod = new Date(displayDate.valueOf());
                 var startTime = $EventCalendar.settings.startTime.split(':');
@@ -750,6 +795,8 @@ if (typeof DEBUG === 'undefined') {
                 }
             } else {
                 $element.find('.bookingCalendar-list').html(events.join(''));
+
+                _initializeDragNDrop();
             }
 
             if ($EventCalendar.settings.collapsible) {
@@ -878,12 +925,14 @@ if (typeof DEBUG === 'undefined') {
 
             // Add the day numbers
             var daysInMonth = Date.getDaysInMonth(dateToShow.getFullYear(), dateToShow.getMonth());
+            var cdate = new Date(dateToShow.valueOf());
             for (dayCount = 1; dayCount <= daysInMonth; dayCount += 1) {
-                calendarCells.push(
-                    '<li id="dayList_' + dayCount + '" rel="' + dayCount + '" class="bookingCalendar-day"><a href="#">' + dayCount + '</a></li>'
+                cdate.addDays(dayCount-1);
+                $eventsCalendarDaysList.append(
+                    $('<li id="dayList_' + dayCount + '" rel="' + dayCount + '" class="bookingCalendar-day js-calendar-day"><a href="#">' + dayCount + '</a></li>').data('date', cdate)
                 );
             }
-            $eventsCalendarDaysList.append(calendarCells.join(''));
+
 
             $eventsCalendarSlider.height($eventsCalendarMonthWrap.height() + 'px');
 
@@ -1213,6 +1262,7 @@ if (typeof DEBUG === 'undefined') {
      */
     $.fn.bookingCalendar.defaults = {
         eventsJson: "js/events.json",
+        service: "/events/",
         jsonData: "",          // to load and inline json (not ajax calls)
         jsonDateFormat: "timestamp", // either timestamp or a format as specified here: https://code.google.com/p/datejs/wiki/FormatSpecifiers
         cacheJson: false,        // if true plugin get a json only first time and after plugin filter events
@@ -1250,6 +1300,7 @@ if (typeof DEBUG === 'undefined') {
         startTime: "08:00",
         endTime: "21:00",
         allowPartialEvents: false,
+        showSlots: false,
         moveSpeed: 500,         // speed of month move when you click on a new date
         moveOpacity: 0.15,         // month and events fadeOut to this opacity
         timePeriods: [15, 30, 60, 90, 120],         // time periods for booking

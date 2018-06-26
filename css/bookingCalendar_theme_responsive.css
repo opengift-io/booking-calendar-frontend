@@ -228,6 +228,13 @@ li.bookingCalendar-day.today a:hover {
     color: #FFF;
 }
 
+.bookingCalendar-daysList li.active a {
+    background: #ffb355;
+    /*box-shadow:inset 5px 5px 10px #698B10;
+    text-shadow: 2px 2px 2px #698B10;*/
+    color: #FF365D;
+}
+
 .bookingCalendar-daysList li.dayWithEvents a {
     background: #ffeef1;
     /*box-shadow:inset 5px 5px 10px #698B10;
@@ -493,4 +500,12 @@ pre {
     color: #eee;
 }
 
+.event-list-item.dnd {
+    padding: 10px;
+    border-radius: 2px;
+}
+
+.event-list-item {
+    cursor: pointer;
+}
 /* end of demo page */
