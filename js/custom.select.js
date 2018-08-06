@@ -37,6 +37,7 @@ for (i = 0; i < x.length; i++) {
             break;
           }
         }
+        s.dispatchEvent(new Event('change'));
         h.click();
     });
     b.appendChild(c);

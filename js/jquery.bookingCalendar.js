@@ -548,18 +548,6 @@ if (typeof DEBUG === 'undefined') {
         var slideDistance = "300";
         var eventsJson = {};
 
-        $EventCalendar.post = function(data, callback) {
-            if (!$EventCalendar.settings.service) {
-                return false;
-            }
-
-            $.post(
-                $EventCalendar.settings.service,
-                data,
-                callback
-            )
-        };
-
 
         var showError = function (msg) {
             $element.find('.bookingCalendar-list-wrap')
@@ -605,12 +593,10 @@ if (typeof DEBUG === 'undefined') {
             }).mouseup(function() {
                 if (window.$dndMovedElement) {
                     if ($overDay) {
-                        $EventCalendar.post(
-                            {
-                                'date': $overDay.data('date'),
-                                'event': window.$dndMovedElement.data('id')
-                            }
-                        )
+                        $EventCalendar.api.updateEvent(
+                            window.$dndMovedElement.data('id'),
+                            {'date': $overDay.data('date')}
+                        );
                     }
                 }
 
@@ -755,7 +741,7 @@ if (typeof DEBUG === 'undefined') {
 
             $element.find('.bookingCalendar-loading').finish().hide();
             $element.find('.bookingCalendar-list').empty();
-            if ($EventCalendar.settings.showSlots && displayDate) {
+            if ($EventCalendar.settings.bookingMode && displayDate) {
                 var dayRoutineI;
                 var datePeriod = new Date(displayDate.valueOf());
                 var startTime = $EventCalendar.settings.startTime.split(':');
@@ -828,6 +814,21 @@ if (typeof DEBUG === 'undefined') {
 
                 getEventsData(eventsJson, maxLimit, specificYear, specificMonth, specificDay, direction);
 
+            } else if ($EventCalendar.settings.rest) {
+                // user send a json in the plugin params
+                $EventCalendar.settings.cacheJson = true;
+
+                $EventCalendar.settings.rest.getEvents(
+                    $EventCalendar.settings.categoryId,
+                    $EventCalendar.settings.participantId,
+                    specificYear,
+                    specificMonth,
+                    specificDay,
+                    function(jsonData) {
+                        eventsJson = jsonData;
+                        getEventsData(eventsJson, maxLimit, specificYear, specificMonth, specificDay, direction);
+                    }
+                );
             } else if (!$EventCalendar.settings.cacheJson || !direction) {
                 // first load: load json and save it to future filters
                 $.getJSON($EventCalendar.settings.eventsjson + "?limit=" + maxLimit + "&year=" + specificYear + "&month=" + specificMonth + "&day=" + specificDay, function (data) {
@@ -886,7 +887,7 @@ if (typeof DEBUG === 'undefined') {
                 $eventsCalendarSlider.append($eventsCalendarMonthWrap);
             }
 
-            $element.find('.bookingCalendar-monthWrap.currentMonth').removeClass('currentMonth').addClass('oldMonth');
+            $element.find('.bookingCalendar-monthWrap.currentMonth').removeClass('currentMonth').addClass('oldMonth').hide();
             $eventsCalendarMonthWrap.addClass('currentMonth').append($eventsCalendarTitle, $eventsCalendarDaysList);
 
 
@@ -1130,6 +1131,22 @@ if (typeof DEBUG === 'undefined') {
 
                 var strDateTo = date.toString('MMMM dS HH:mm');
                 $regWin.append(data).find('.js-form-title').text('Book time slot from ' + strDateFrom + ' to '+ strDateTo);
+
+                $regWin.find('.js-event-add-form').submit(function() {
+
+                    var data = {};
+                    $.each($(this).serializeArray(), function(k, val) {
+                        data[val['name']] = val['value'];
+                    });
+                    $EventCalendar.api.addEvent(data, function(data) {
+                        if (typeof $EventCalendar.settings.bookingCallback == 'function') {
+                            $EventCalendar.settings.bookingCallback();
+                        } else {
+                            document.location.reload();
+                        }
+                    });
+                    return false;
+                });
             })
         };
 
@@ -1154,6 +1171,8 @@ if (typeof DEBUG === 'undefined') {
 
         var _initialise = function () {
             $EventCalendar.settings = $.extend({}, $.fn.bookingCalendar.defaults, options);
+
+            $EventCalendar.api = $EventCalendar.settings.rest;
 
             _initialiseLoadingMessage();
             _initialisePeriodList();
@@ -1244,7 +1263,8 @@ if (typeof DEBUG === 'undefined') {
 
             // Return early if this element already has a plugin instance
             if (element.data('eventCalendar')) {
-                return;
+                element.data('eventCalendar', false);
+                element.empty();
             }
 
             // pass options to plugin constructor
@@ -1261,8 +1281,7 @@ if (typeof DEBUG === 'undefined') {
      * @type {{eventsJson: string, jsonDateFormat: string, jsonData: string, cacheJson: boolean, sortAscending: boolean, eventsLimit: number, dayNameFormat: string, textCalendarTitle: string, textEventHeaderDayView: string, textEventHeaderMonthView: string, textNoEvents: string, textNext: string, textPrevious: string, textNextEvents: string, textGoToEventUrl: string, showDayAsWeeks: boolean, startWeekOnMonday: boolean, showDayNameInCalendar: boolean, showDescription: boolean, collapsible: boolean, onlyOneDescription: boolean, openEventInNewWindow: boolean, eventsScrollable: boolean, initialEventList: boolean|string, currentDate: Date, moveSpeed: number, moveOpacity: number}}
      */
     $.fn.bookingCalendar.defaults = {
-        eventsJson: "js/events.json",
-        service: "/events/",
+        rest: "/events.json",
         jsonData: "",          // to load and inline json (not ajax calls)
         jsonDateFormat: "timestamp", // either timestamp or a format as specified here: https://code.google.com/p/datejs/wiki/FormatSpecifiers
         cacheJson: false,        // if true plugin get a json only first time and after plugin filter events
@@ -1300,10 +1319,12 @@ if (typeof DEBUG === 'undefined') {
         startTime: "08:00",
         endTime: "21:00",
         allowPartialEvents: false,
-        showSlots: false,
+        bookingMode: false,
         moveSpeed: 500,         // speed of month move when you click on a new date
         moveOpacity: 0.15,         // month and events fadeOut to this opacity
         timePeriods: [15, 30, 60, 90, 120],         // time periods for booking
+        categoryId: false,
+        participantId: false,
         categoriesForBooking: [
             {
                 'name': 'Room 1',
